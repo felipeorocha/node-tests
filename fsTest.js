@@ -1,18 +1,16 @@
-const fs = require('fs');
+const { promises: fs } = require("fs");
 
-const callback = data => {
-  return data.toString()
-}
+// const callback = data => {
+//   return data
+// }
 
-const readFile = file => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, (err, data) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(callback(data));
-    });
-  });
+const readFile = async file => {
+  try {
+    let result = await fs.readFile(file, (err, data) => data)
+    return result.toString()
+  } catch (e) {
+    console.log("Erro!", e);
+  }
 }
 
 module.exports = readFile
